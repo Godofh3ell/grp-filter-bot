@@ -105,7 +105,7 @@ IS_VERIFY = is_enabled(environ.get("IS_VERIFY", "False"), False)
 WELCOME_TEXT = environ.get("WELCOME_TEXT", script.WELCOME_TEXT)
 TUTORIAL = environ.get("TUTORIAL", "https://t.me/tsnm_index")
 VERIFY_TUTORIAL = environ.get("VERIFY_TUTORIAL", "https://t.me/tsnm_index")
-INDEX_EXTENSIONS = [extensions.lower() for extensions in environ.get('INDEX_EXTENSIONS', 'mp4 mkv').split()]
+INDEX_EXTENSIONS = [extensions.lower() for extensions in environ.get('INDEX_EXTENSIONS', 'mp4 mkv avi').split()]
 
 # stream features vars
 BIN_CHANNEL = environ.get("BIN_CHANNEL", "")
