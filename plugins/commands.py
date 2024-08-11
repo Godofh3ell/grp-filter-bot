@@ -115,41 +115,36 @@ async def start(client, message):
         return 
         
     if mc.startswith('all'):
-    _, grp_id, key = mc.split("_", 2)
-    files = temp.FILES.get(key)
-    if not files:
-        return await message.reply('No Such All Files Exist!')
-    settings = await get_settings(int(grp_id))
-    for file in files:
-        first_two_words = ' '.join(file.file_name.replace("[TSNM]", "").split()[:2]).strip()
-        CAPTION = settings['caption']
-        f_caption = CAPTION.format(
-            file_name=file.file_name,
-            file_size=get_size(file.file_size),
-            file_caption=file.caption
-        )
-        btn = [
-            [
+        _, grp_id, key = mc.split("_", 2)
+        files = temp.FILES.get(key)
+        if not files:
+            return await message.reply('No Such All Files Exist!')
+        settings = await get_settings(int(grp_id))
+        for file in files:
+            first_two_words = ' '.join(file.file_name.replace("[TSNM]", "").split()[:2]).strip()
+            CAPTION = settings['caption']
+            f_caption = CAPTION.format(
+                file_name = file.file_name,
+                file_size = get_size(file.file_size),
+                file_caption=file.caption
+            )   
+            btn = [[
                 InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f"stream#{file.file_id}")
-            ] if user_is_group_admin else [],
-            [
+            ],[
                 InlineKeyboardButton("🌟 Review this movie / series", url=f'http://reviewdeck.eu.org/search/{urllib.parse.quote(first_two_words)}')
-            ],
-            [
+            ],[
                 InlineKeyboardButton('⚡️ ᴜᴘᴅᴀᴛᴇs ᴄʜᴀɴɴᴇʟ ⚡️', url=UPDATES_LINK),
                 InlineKeyboardButton('💡 Support Group 💡', url=SUPPORT_LINK)
-            ],
-            [
+            ],[
                 InlineKeyboardButton('⁉️ ᴄʟᴏsᴇ ⁉️', callback_data='close_data')
-            ]
-        ]
-        await client.send_cached_media(
-            chat_id=message.from_user.id,
-            file_id=file.file_id,
-            caption=f_caption,
-            protect_content=settings['file_secure'],
-            reply_markup=InlineKeyboardMarkup(btn)
-        )
+            ]]
+            await client.send_cached_media(
+                chat_id=message.from_user.id,
+                file_id=file.file_id,
+                caption=f_caption,
+                protect_content=settings['file_secure'],
+                reply_markup=InlineKeyboardMarkup(btn)
+            )
         return
 
     type_, grp_id, file_id = mc.split("_", 2)
